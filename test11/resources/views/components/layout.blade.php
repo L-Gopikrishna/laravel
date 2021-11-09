@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Blog</title>
+        <link rel="stylesheet" href="app.css" type="text/css">
+    </head>
+    <body>
+        {{ $slot }}
+    </body>
+</html>
