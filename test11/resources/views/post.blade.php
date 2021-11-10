@@ -3,7 +3,7 @@
         <section>
             <h1><?= $post->title; ?></h1>
             <p>
-                <a href="{{ route('category') }}/{{ $post->category->slug }}">{{ $post->category->name }}</a>
+                By <a href="{{ route('author') }}/{{$post->author->username}}">{{ $post->author->name }}</a> in <a href="{{ route('category') }}/{{ $post->category->slug }}">{{ $post->category->name }}</a>
             </p>
             <div>{{!! $post->body !!}}</div>
         </section>

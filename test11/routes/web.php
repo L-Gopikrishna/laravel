@@ -16,15 +16,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 //Route::get('/', function () { return view('welcome'); })->name('welcome');
 
 Route::get('/', function () {
-
     return view('posts', [
-        'posts' => Post::all()
+        'posts' => Post::latest()->get()
     ]);
 
 })->name('posts');
@@ -37,9 +39,16 @@ Route::get( 'post/{post:slug?}', function (Post $post) {
 
     }
 )->name('post');
+
 Route::get('categories/{category:slug?}', function (Categories $category) {
     return view('posts', [
         'posts' => $category->posts
     ]);
 })->name('category');
 
+Route::get('authors/{author:username?}', function (User $author) {
+    // dd($author);
+    return view('posts', [
+        'posts' => $author->posts
+    ]);
+})->name('author');
