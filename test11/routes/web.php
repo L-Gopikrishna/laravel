@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Http\Controllers;
+use App\Models\Categories;
 use App\Models\Post;
 use Illuminate\Support\Facades;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -28,11 +29,17 @@ Route::get('/', function () {
 
 })->name('posts');
 
-Route::get( 'post/{post?}', function ($slug) {
+Route::get( 'post/{post:slug?}', function (Post $post) {
 
     return view('post', [
-                'post' => Post::find($slug) ]);
+                'post' => $post
+         ]);
 
     }
 )->name('post');
+Route::get('categories/{category:slug?}', function (Categories $category) {
+    return view('posts', [
+        'posts' => $category->posts
+    ]);
+})->name('category');
 
