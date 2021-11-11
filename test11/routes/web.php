@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Http\Controllers;
+use App\Http\Controllers\SessionController;
 use App\Models\Categories;
 use App\Models\Post;
 use App\Models\User;
@@ -28,7 +29,6 @@ Route::get('/', function () {
     return view('posts', [
         'posts' => Post::latest()->get()
     ]);
-
 })->name('posts');
 
 Route::get( 'post/{post:slug?}', function (Post $post) {
@@ -47,8 +47,13 @@ Route::get('categories/{category:slug?}', function (Categories $category) {
 })->name('category');
 
 Route::get('authors/{author:username?}', function (User $author) {
-    // dd($author);
     return view('posts', [
         'posts' => $author->posts
     ]);
 })->name('author');
+
+Route::get('register', [RegisterController::class, 'create'])->name('register')->middleware('guest');
+Route::post('register', [RegisterController::class, 'store'])->name('storage')->middleware('guest');
+Route::post('logout', [SessionController::class, 'destroy'])->name('ses_des')->middleware('auth');
+Route::get('login', [SessionController::class, 'lgin'])->name('login')->middleware('guest');
+Route::post('sessions', [SessionController::class, 'store'])->name('new_ses')->middleware('guest');
